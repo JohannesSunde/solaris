@@ -132,6 +132,42 @@ input { font-family: var(--font-mono); }
   max-width: min(420px, calc(100vw - 28px));
 }
 
+.mode-dock {
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 14px;
+  z-index: 5;
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  pointer-events: none;
+}
+.mode-dock-map {
+  top: 14px;
+  bottom: auto;
+}
+.mode-pill {
+  pointer-events: auto;
+  min-width: 120px;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.12);
+  background: rgba(10,10,15,0.72);
+  backdrop-filter: blur(12px);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+}
+.mode-pill.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(245,166,35,0.12);
+}
+
 /* ── AR View ───────────────────────────────────────────── */
 #camera-feed {
   position: absolute; inset: 0;

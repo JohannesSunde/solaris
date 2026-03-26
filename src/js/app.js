@@ -98,12 +98,12 @@ async function init() {
   });
 
   // Tab switching
-  document.querySelectorAll('.tab').forEach(tab => {
+  document.querySelectorAll('.tab, .mode-pill').forEach(tab => {
     tab.addEventListener('click', () => {
       const target = tab.dataset.tab;
       state.activeTab = target;
-      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-      tab.classList.add('active');
+      document.querySelectorAll('.tab, .mode-pill').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll(`.tab[data-tab="${target}"], .mode-pill[data-tab="${target}"]`).forEach(t => t.classList.add('active'));
       document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
       document.getElementById(`tab-${target}`).classList.remove('hidden');
       if (target === 'map') {
