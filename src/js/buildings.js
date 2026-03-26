@@ -5,6 +5,7 @@ const OVERPASS_URL = 'https://overpass-api.de/api/interpreter';
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24h
 const TILE_SIZE_DEG = 0.002; // ~200m at mid-latitudes
 const AVG_FLOOR_HEIGHT = 3.5; // metres per floor
+const VIEW_RADIUS_M = 220;
 
 export class BuildingFetcher {
   constructor() {
@@ -12,31 +13,13 @@ export class BuildingFetcher {
   }
 
   async fetch(lat, lng, sunAzimuthDeg, sunAltitudeDeg) {
-    // Determine fetch cone
-    const altDeg = Math.max(sunAltitudeDeg, 1);
-    const refHeight = 12; // 3-storey reference building
-    const coneLength = Math.min(600, refHeight / Math.tan(altDeg * Math.PI / 180));
-    const coneAngle = Math.max(30, 90 - altDeg); // degrees each side of sun az
-    const innerR = 0.001; // ~80m in degrees
+    const radiusLat = VIEW_RADIUS_M / 111320;
+    const radiusLng = radiusLat / Math.max(Math.cos(lat * Math.PI / 180), 0.2);
 
-    // Shadow falls opposite the sun
-    const shadowAz = (sunAzimuthDeg + 180) % 360;
-
-    // Build bounding box: always fetch inner circle + cone in shadow direction
-    const allBuildings = new Map(); // keyed by OSM id
-
-    // 1. Inner circle bbox
-    const innerBuildings = await this._fetchBbox(
-      lat - innerR, lng - innerR,
-      lat + innerR, lng + innerR
+    return this._fetchBbox(
+      lat - radiusLat, lng - radiusLng,
+      lat + radiusLat, lng + radiusLng
     );
-    innerBuildings.forEach(b => allBuildings.set(b.id, b));
-
-    // 2. Cone in shadow direction (narrow rect approximation)
-    const coneBuildings = await this._fetchCone(lat, lng, shadowAz, coneLength, coneAngle);
-    coneBuildings.forEach(b => allBuildings.set(b.id, b));
-
-    return Array.from(allBuildings.values());
   }
 
   async _fetchCone(lat, lng, azimuthDeg, lengthM, halfAngleDeg) {
