@@ -45,7 +45,7 @@
       <nav id="tab-bar">
         <button class="tab active" data-tab="ar">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M15 10l4.553-2.069A1 1 0 0121 8.876V18a1 1 0 01-1.447.894L15 17M3 8a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1H4a1 1 0 01-1-1V8z"/></svg>
-          <span>AR View</span>
+          <span>Camera</span>
         </button>
         <button class="tab" data-tab="map">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3"/><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
@@ -57,6 +57,11 @@
       <div id="tab-ar" class="tab-content active">
         <video id="camera-feed" autoplay playsinline muted></video>
         <canvas id="ar-canvas"></canvas>
+
+        <div class="view-hint">
+          <strong>Live camera view</strong>
+          <span>Tap Plan below to set the date and time, then come back here to see the sun in context.</span>
+        </div>
 
         <!-- HUD -->
         <div id="ar-hud">
@@ -84,6 +89,11 @@
       <div id="tab-map" class="tab-content hidden">
         <canvas id="map-canvas"></canvas>
 
+        <div class="view-hint view-hint-map">
+          <strong>Planning view</strong>
+          <span>Use the date picker or quick presets, then drag the orange sun path to change the time.</span>
+        </div>
+
         <!-- Controls -->
         <div id="map-controls">
           <div class="control-row">
@@ -98,7 +108,8 @@
           </div>
 
           <div class="control-row scrubber-row">
-            <label class="ctrl-label" id="time-label">12:00</label>
+            <label class="ctrl-label">Time</label>
+            <div class="time-readout" id="time-label">12:00</div>
             <div id="sun-path-scrubber">
               <canvas id="scrubber-canvas"></canvas>
               <div id="scrubber-handle"></div>

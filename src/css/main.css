@@ -85,7 +85,7 @@ input { font-family: var(--font-mono); }
 .tab {
   flex: 1; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 4px;
-  color: var(--muted); font-size: 0.7rem; letter-spacing: 0.08em;
+  color: var(--muted); font-size: 0.74rem; letter-spacing: 0.08em;
   text-transform: uppercase; transition: color 0.2s;
 }
 .tab svg { width: 20px; height: 20px; }
@@ -98,6 +98,39 @@ input { font-family: var(--font-mono); }
   height: calc(100vh - var(--tab-h));
 }
 .tab-content.hidden { display: none; }
+
+/* â”€â”€ View hints â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+.view-hint {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  z-index: 4;
+  max-width: min(340px, calc(100vw - 28px));
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(10,10,15,0.75);
+  border: 1px solid rgba(255,255,255,0.09);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 10px 24px rgba(0,0,0,0.22);
+}
+.view-hint strong {
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.view-hint span {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--text);
+}
+.view-hint-map {
+  max-width: min(420px, calc(100vw - 28px));
+}
 
 /* ── AR View ───────────────────────────────────────────── */
 #camera-feed {
@@ -181,15 +214,16 @@ input { font-family: var(--font-mono); }
 #map-controls {
   background: var(--surface);
   border-top: 1px solid var(--border);
-  padding: 12px 16px;
-  display: flex; flex-direction: column; gap: 10px;
+  padding: 14px 16px 12px;
+  display: flex; flex-direction: column; gap: 12px;
   flex-shrink: 0;
 }
 .control-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .ctrl-label {
   font-family: var(--font-mono); font-size: 0.8rem;
-  color: var(--accent); letter-spacing: 0.06em;
-  min-width: 44px;
+  color: var(--accent); letter-spacing: 0.08em;
+  min-width: 48px;
+  text-transform: uppercase;
 }
 .ctrl-input {
   background: rgba(255,255,255,0.05);
@@ -197,15 +231,32 @@ input { font-family: var(--font-mono); }
   color: var(--text); padding: 6px 10px; border-radius: 4px;
   font-size: 0.8rem;
   color-scheme: dark;
+  min-height: 32px;
+}
+.time-readout {
+  min-width: 72px;
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.05);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--text);
 }
 .quick-dates { display: flex; gap: 6px; flex-wrap: wrap; }
 .qd-btn {
-  padding: 5px 10px; border-radius: 3px;
+  padding: 6px 10px; border-radius: 999px;
   border: 1px solid var(--border);
   font-size: 0.72rem; letter-spacing: 0.05em;
-  color: var(--muted); transition: color 0.2s, border-color 0.2s;
+  color: var(--muted); transition: color 0.2s, border-color 0.2s, background 0.2s;
+  background: rgba(255,255,255,0.03);
 }
-.qd-btn:active, .qd-btn.active { color: var(--accent); border-color: var(--accent); }
+.qd-btn:active, .qd-btn.active {
+  color: var(--accent);
+  border-color: var(--accent);
+  background: rgba(245,166,35,0.08);
+}
 
 /* ── Scrubber ──────────────────────────────────────────── */
 .scrubber-row { position: relative; }
@@ -221,6 +272,17 @@ input { font-family: var(--font-mono); }
   box-shadow: 0 0 12px rgba(245,166,35,0.7);
   pointer-events: none;
   transition: box-shadow 0.1s;
+}
+.scrubber-row::after {
+  content: 'Drag to change time';
+  position: absolute;
+  right: 0;
+  top: -4px;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
 }
 
 /* ── Info chips ────────────────────────────────────────── */

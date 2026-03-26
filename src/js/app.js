@@ -63,7 +63,7 @@ async function init() {
   // Date picker
   const datePicker = document.getElementById('date-picker');
   const today = new Date();
-  datePicker.value = today.toISOString().split('T')[0];
+  datePicker.value = formatDateInputValue(today);
   datePicker.addEventListener('change', () => {
     state.selectedDate = new Date(datePicker.value + 'T12:00:00');
     scrubber.redraw();
@@ -88,7 +88,7 @@ async function init() {
         d = new Date(year, 2, 20);
       }
       state.selectedDate = d;
-      datePicker.value = d.toISOString().split('T')[0];
+      datePicker.value = formatDateInputValue(d);
       document.querySelectorAll('.qd-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       scrubber.redraw();
@@ -231,6 +231,12 @@ function formatHour(h) {
   const hh = Math.floor(h);
   const mm = String(Math.round((h - hh) * 60)).padStart(2, '0');
   return `${String(hh).padStart(2,'0')}:${mm}`;
+}
+function formatDateInputValue(d) {
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 function haversineDist(lat1, lng1, lat2, lng2) {
   if (!lat1 || !lat2) return 999;
