@@ -22,8 +22,8 @@ export class Scrubber {
     const ctx = canvas.getContext('2d');
 
     // Background
-    ctx.fillStyle = 'rgba(255,255,255,0.03)';
-    ctx.roundRect(0, 0, W, H, 4);
+    ctx.fillStyle = 'rgba(255,255,255,0.035)';
+    ctx.roundRect(0, 0, W, H, 14);
     ctx.fill();
 
     // Get full day arc
@@ -58,8 +58,14 @@ export class Scrubber {
       if (!started) { ctx.moveTo(x, y); started = true; }
       else ctx.lineTo(x, y);
     });
-    ctx.strokeStyle = 'rgba(245,166,35,0.5)';
-    ctx.lineWidth = 2;
+    const gradient = ctx.createLinearGradient(0, 0, W, 0);
+    gradient.addColorStop(0, '#315c87');
+    gradient.addColorStop(0.25, '#f7b733');
+    gradient.addColorStop(0.5, '#ffe083');
+    gradient.addColorStop(0.75, '#f7b733');
+    gradient.addColorStop(1, '#315c87');
+    ctx.strokeStyle = gradient;
+    ctx.lineWidth = 2.5;
     ctx.stroke();
 
     // Sunrise/sunset ticks
@@ -69,16 +75,16 @@ export class Scrubber {
       const x = (h / 24) * W;
       ctx.beginPath();
       ctx.moveTo(x, H - 12); ctx.lineTo(x, H);
-      ctx.strokeStyle = 'rgba(245,166,35,0.6)';
+      ctx.strokeStyle = 'rgba(247,183,51,0.7)';
       ctx.lineWidth = 1.5;
       ctx.stroke();
     });
 
     // Hour labels
-    ctx.fillStyle = 'rgba(232,228,217,0.3)';
+    ctx.fillStyle = 'rgba(232,228,217,0.38)';
     ctx.font = '9px Syne Mono, monospace';
     ctx.textAlign = 'center';
-    [6, 12, 18].forEach(h => {
+    [0, 6, 12, 18, 24].forEach(h => {
       ctx.fillText(`${h}h`, (h / 24) * W, H - 2);
     });
 
@@ -91,7 +97,7 @@ export class Scrubber {
     if (!start || !end || isNaN(start) || isNaN(end)) return;
     const x1 = ((start.getHours() + start.getMinutes()/60) / 24) * W;
     const x2 = ((end.getHours() + end.getMinutes()/60) / 24) * W;
-    ctx.fillStyle = 'rgba(245,166,35,0.12)';
+    ctx.fillStyle = 'rgba(247,183,51,0.18)';
     ctx.fillRect(Math.min(x1,x2), 0, Math.abs(x2-x1), H);
   }
 
@@ -99,7 +105,7 @@ export class Scrubber {
     if (!start || !end || isNaN(start) || isNaN(end)) return;
     const x1 = ((start.getHours() + start.getMinutes()/60) / 24) * W;
     const x2 = ((end.getHours() + end.getMinutes()/60) / 24) * W;
-    ctx.fillStyle = 'rgba(79,195,247,0.08)';
+    ctx.fillStyle = 'rgba(79,195,247,0.12)';
     ctx.fillRect(Math.min(x1,x2), 0, Math.abs(x2-x1), H);
   }
 
