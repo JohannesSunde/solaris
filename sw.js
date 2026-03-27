@@ -1,20 +1,24 @@
 // sw.js — Service Worker for offline caching
 
-const CACHE = 'solaris-v1';
+const CACHE = 'solaris-v2';
 const PRECACHE = [
-  '/',
-  '/index.html',
-  '/src/css/main.css',
-  '/src/js/app.js',
-  '/src/js/sun-engine.js',
-  '/src/js/buildings.js',
-  '/src/js/map-renderer.js',
-  '/src/js/ar-renderer.js',
-  '/src/js/scrubber.js',
-  '/src/js/location.js',
-  '/src/js/compass.js',
-  '/src/js/camera.js',
-  '/src/js/sw-register.js',
+  './',
+  './index.html',
+  './manifest.json',
+  './src/css/main.css',
+  './src/js/app.js',
+  './src/js/sun-engine.js',
+  './src/js/sun-path-scene.js',
+  './src/js/buildings.js',
+  './src/js/map-renderer.js',
+  './src/js/ar-renderer.js',
+  './src/js/scrubber.js',
+  './src/js/location.js',
+  './src/js/compass.js',
+  './src/js/camera.js',
+  './src/js/sw-register.js',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
   'https://cdnjs.cloudflare.com/ajax/libs/suncalc/1.9.0/suncalc.min.js',
 ];
 
